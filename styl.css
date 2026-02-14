@@ -1,0 +1,26 @@
+.nazwapng {
+     width:500px;
+     height:auto;
+     display: block;
+     margin-left:auto;
+     margin-right:auto;
+}
+
+.przyciskstart{
+    display: block;
+    text-align: center;
+    cursor: pointer;
+    align-items: center;
+    margin: 0 auto;
+    width:200px;
+    height:auto;
+    font-size:50px;
+}
+
+.losowyobraz{
+    width:500px;
+     height:auto;
+     display: block;
+     margin-left:auto;
+     margin-right:auto;
+}
