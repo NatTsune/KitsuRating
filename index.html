@@ -10,11 +10,17 @@
         <img src="kitsutitle.png" alt="Nazwa strony" class="nazwapng">
 
         <div class="Obrazy">
-            <button class="przyciskstart" type="button" onclick="LosujObrazek()">Start</button>
-            
+            <button class="przyciskstart" id="start" type="button">Start</button>
+
             <div id="Obraz">
-                <img id="LosowyObraz" class="losowyobraz" src="obrazykitsu/placeholder.jpg" alt="">
+                <img id="LosowyObraz" class="losowyobraz" src="" alt="">
             </div>
+            <button class="dislike" type="button" id="dislike"> Dislike</button>
+            <button class="like" type="button" id="like"> Like</button>
+        </div>
+
+        <div id="Dislikowane_Obrazy">
+
         </div>
         
         <script src="skrypt2.js"></script>
