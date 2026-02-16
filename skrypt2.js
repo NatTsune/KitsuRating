@@ -2,12 +2,15 @@ class PierwszyTryb {
     constructor(obrazykitsu) {
     this.ListaObrazow = [...obrazykitsu];
     this.historiadislike = [];
+    this.historialike = [];
     this.ostatnieZdjecie;
 
     this.przyc_start = document.getElementById('start')
     this.przyc_dislike = document.getElementById('dislike');
     this.przyc_like = document.getElementById('like');
     this.dislikowaneObrazy = document.getElementById('Dislikowane_Obrazy');
+    this.likowaneObrazy = document.getElementById('Likowane_Obrazy');
+    
     
     this.LosObr = document.getElementById('LosowyObraz');
     
@@ -33,43 +36,87 @@ class PierwszyTryb {
 
         this.RandomowyIndex = Math.floor(Math.random() * this.ListaObrazow.length);
         this.LosObr.src = 'obrazykitsu/' + this.ListaObrazow[this.RandomowyIndex] + ".jpg";
-        this.ostatnieZdjecie = this.ListaObrazow.splice(this.RandomowyIndex, 1);
+        this.ostatnieZdjecie = this.ListaObrazow.splice(this.RandomowyIndex, 1)[0];
+        console.log("Wylosowano:", this.ostatnieZdjecie);
     }
     Dislikuj() {
+        console.log("Dislikowano, tabela:" , this.historiadislike);
+        this.historiadislike.push('obrazykitsu/' + this.ostatnieZdjecie + ".jpg");
         if (this.ListaObrazow.length === 0)
         {
-            this.przyc_like.style.display = 'none';
-            this.przyc_dislike.style.display = 'none';
-            this.LosObr.style.display ='none';
+            this.Wyniki();
             return;
         }
         let NowyIndeks;
         
         NowyIndeks = Math.floor(Math.random() * this.ListaObrazow.length);
+        //this.RandomowyIndex = NowyIndeks;
         this.LosObr.src = 'obrazykitsu/' + this.ListaObrazow[NowyIndeks] + ".jpg";
         this.ostatnieZdjecie = this.ListaObrazow.splice(NowyIndeks, 1)[0];
 
+
         console.log("Wylosowano:", this.ostatnieZdjecie);
         console.log("Pozostało w puli:", this.ListaObrazow.length);
+        /*if (this.ListaObrazow.length === 0)
+        {
+            this.Wyniki();
+            return;
+        }*/
         
     }
     Likuj() {
+        console.log("Likowano, tabela:" , this.historialike);
+        this.historialike.push('obrazykitsu/' + this.ostatnieZdjecie + ".jpg");
         if (this.ListaObrazow.length === 0)
         {
-            this.przyc_like.style.display = 'none';
-            this.przyc_dislike.style.display = 'none';
-            this.LosObr.style.display ='none';
+            this.Wyniki();
             return;
         }
+
         let NowyIndeks;
         
         NowyIndeks = Math.floor(Math.random() * this.ListaObrazow.length);
+        //this.RandomowyIndex = NowyIndeks;
         this.LosObr.src = 'obrazykitsu/' + this.ListaObrazow[NowyIndeks] + ".jpg";
         this.ostatnieZdjecie = this.ListaObrazow.splice(NowyIndeks, 1)[0];
 
         console.log("Wylosowano:", this.ostatnieZdjecie);
-        console.log("Pozostało w puli:", this.ListaObrazow.length);
         
+        console.log("Pozostało w puli:", this.ListaObrazow.length);
+        /*if (this.ListaObrazow.length === 0)
+        {
+            this.Wyniki();
+            return;
+        }*/
+    }
+    Wyniki(){
+        this.przyc_like.style.display = 'none';
+        this.przyc_dislike.style.display = 'none';
+        this.LosObr.style.display ='none';
+        this.dislikowaneObrazy.style.display = 'block';
+        this.likowaneObrazy.style.display = 'block';
+        console.log("hej1");
+        for (let i = 0; i < this.historiadislike.length; i++) {
+            const nowyobraz = document.createElement('img');
+            console.log(this.historiadislike[i]);
+            console.log(i);
+            nowyobraz.src = this.historiadislike[i];
+            nowyobraz.style.width= '100px';
+            nowyobraz.style.height = 'auto';
+            this.dislikowaneObrazy.appendChild(nowyobraz);
+            console.log("dislike dziala");
+        }
+        for (let i = 0; i < this.historialike.length; i++) {
+            const nowyobraz = document.createElement('img');
+            console.log(this.historialike[i]);
+            console.log(i);
+            nowyobraz.src = this.historialike[i];
+            nowyobraz.style.width= '100px';
+            nowyobraz.style.height = 'auto';
+            this.likowaneObrazy.appendChild(nowyobraz);
+            console.log("like dziala");
+        }
+        console.log("hej2");
     }
 
 }

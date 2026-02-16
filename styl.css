@@ -46,3 +46,12 @@
     align-items:center;
     margin: 0 auto;
 }
+
+.dislikowaneobrazy{
+    display:none;
+}
+
+.likowaneobrazy{
+    display:none;
+}
+
