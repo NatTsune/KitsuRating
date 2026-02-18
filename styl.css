@@ -7,7 +7,7 @@
 }
 
 .przyciskstart{
-    display: block;
+    display: none;
     text-align: center;
     cursor: pointer;
     align-items: center;
@@ -55,3 +55,47 @@
     display:none;
 }
 
+.Tryby{
+    display:block;
+}
+
+.przyciskstart2{
+    display: none;
+    text-align: center;
+    cursor: pointer;
+    align-items: center;
+    margin: 0 auto;
+    width:200px;
+    height:auto;
+    font-size:50px;
+}
+
+.losowyobraz1{
+    width:500px;
+    height:auto;
+    display: inline-block;
+    /*margin-left:auto;
+    margin-right:auto;*/
+}
+
+.losowyobraz2{
+    width:500px;
+    height:auto;
+    display: inline-block;
+    float: right;
+    /*margin-left:500px;
+    margin-right:auto;*/
+}
+
+.tekst2tryb{
+    text-align:center;
+    display:none;
+}
+
+.przycwybierz2{
+    display: none;
+}
+
+.przycwybierz1{
+    display: none;
+}
