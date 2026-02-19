@@ -130,10 +130,14 @@ class DrugiTryb {
         this.ListaObrazow = [...obrazykitsu];
         this.ostatnieZdjecie;
         this.ostatnieZdjecie2;
+        this.wybraneObrazyhis = [];
+        this.niewybraneObrazyhis = [];
 
         this.przyc_start = document.getElementById('start2');
         this.przyc_wybierz1 = document.getElementById('przycwybierz1');
         this.przyc_wybierz2 = document.getElementById('przycwybierz2');
+        this.wybraneObrazy = document.getElementById('wybraneObrazy');
+        this.niewybraneObrazy = document.getElementById('niewybraneObrazy');
 
 
         this.LosObr1 = document.getElementById('LosowyObraz1');
@@ -163,18 +167,20 @@ class DrugiTryb {
 
         this.RandomowyIndex = Math.floor(Math.random() * this.ListaObrazow.length);
         this.LosObr1.src = 'obrazykitsu/' + this.ListaObrazow[this.RandomowyIndex] + ".jpg";
-        this.ostatnieZdjecie = this.ListaObrazow.splice(this.RandomowyIndex, 1)[0];
+        this.ostatnieZdjecie1 = this.ListaObrazow.splice(this.RandomowyIndex, 1)[0];
         this.RandomowyIndex2 = Math.floor(Math.random() * this.ListaObrazow.length);
         this.LosObr2.src = 'obrazykitsu/' + this.ListaObrazow[this.RandomowyIndex2] + ".jpg";
         this.ostatnieZdjecie2 = this.ListaObrazow.splice(this.RandomowyIndex2, 1)[0];
-        console.log("Wylosowano:  ", this.ostatnieZdjecie, " i: ", this.ostatnieZdjecie2);
+        console.log("Wylosowano:  ", this.ostatnieZdjecie1, " i: ", this.ostatnieZdjecie2);
     }
 
     Wybierz1() {
         console.log("Wybrano 1");
+        this.wybraneObrazyhis.push('obrazykitsu/' + this.ostatnieZdjecie1 + ".jpg");
+        this.niewybraneObrazyhis.push('obrazykitsu/' + this.ostatnieZdjecie2 + ".jpg");
         if (this.ListaObrazow.length === 0)
         {
-            this.Wyniki();
+            this.Wyniki1();
             return;
         }
         let NowyIndeks1;
@@ -197,9 +203,11 @@ class DrugiTryb {
     }
     Wybierz2() {
         console.log("Wybrano 2");
+        this.wybraneObrazyhis.push('obrazykitsu/' + this.ostatnieZdjecie2 + ".jpg");
+        this.niewybraneObrazyhis.push('obrazykitsu/' + this.ostatnieZdjecie1 + ".jpg");
         if (this.ListaObrazow.length === 0)
         {
-            this.Wyniki();
+            this.Wyniki1();
             return;
         }
         let NowyIndeks1;
@@ -221,13 +229,35 @@ class DrugiTryb {
 
     }
 
-    Wyniki(){
+    Wyniki1(){
         this.przyc_wybierz1.style.display = 'none';
         this.przyc_wybierz2.style.display = 'none';
         this.LosObr1.style.display ='none';
         this.LosObr2.style.display ='none';
         this.tekst1.style.display = 'none';
-        console.log('tryb2 skonczony');
+        this.wybraneObrazy.style.display = 'block';
+        this.niewybraneObrazy.style.display = 'block';
+        console.log('tryb2 etap1 skonczony');
+        for (let i = 0; i < this.wybraneObrazyhis.length; i++) {
+            const nowyobraz = document.createElement('img');
+            console.log(this.wybraneObrazyhis[i]);
+            console.log(i);
+            nowyobraz.src = this.wybraneObrazyhis[i];
+            nowyobraz.style.width= '100px';
+            nowyobraz.style.height = 'auto';
+            this.wybraneObrazy.appendChild(nowyobraz);
+            console.log("wybraneobr dziala");
+        }
+        for (let i = 0; i < this.niewybraneObrazyhis.length; i++) {
+            const nowyobraz = document.createElement('img');
+            console.log(this.niewybraneObrazyhis[i]);
+            console.log(i);
+            nowyobraz.src = this.niewybraneObrazyhis[i];
+            nowyobraz.style.width= '100px';
+            nowyobraz.style.height = 'auto';
+            this.niewybraneObrazy.appendChild(nowyobraz);
+            console.log("niewybraneobr dziala");
+        }
     }
 }
 

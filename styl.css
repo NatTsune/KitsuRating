@@ -99,3 +99,11 @@
 .przycwybierz1{
     display: none;
 }
+
+.wybraneobrazy{
+    display:none;
+}
+
+.niewybraneobrazy {
+    display:none;
+}
