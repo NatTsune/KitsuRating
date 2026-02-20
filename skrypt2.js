@@ -132,13 +132,15 @@ class DrugiTryb {
         this.ostatnieZdjecie2;
         this.wybraneObrazyhis = [];
         this.niewybraneObrazyhis = [];
+        this.ranking = [];
+        this.przegrani = [];
+        this.zwyciezcyTejRundy = [];
+        this.runda = 1;
 
         this.przyc_start = document.getElementById('start2');
         this.przyc_wybierz1 = document.getElementById('przycwybierz1');
         this.przyc_wybierz2 = document.getElementById('przycwybierz2');
-        this.wybraneObrazy = document.getElementById('wybraneObrazy');
-        this.niewybraneObrazy = document.getElementById('niewybraneObrazy');
-
+        this.ObrazyRanking = document.getElementById('Ranking');
 
         this.LosObr1 = document.getElementById('LosowyObraz1');
         this.LosObr2 = document.getElementById('LosowyObraz2');
@@ -178,26 +180,39 @@ class DrugiTryb {
         console.log("Wybrano 1");
         this.wybraneObrazyhis.push('obrazykitsu/' + this.ostatnieZdjecie1 + ".jpg");
         this.niewybraneObrazyhis.push('obrazykitsu/' + this.ostatnieZdjecie2 + ".jpg");
-        if (this.ListaObrazow.length === 0)
+        this.zwyciezcyTejRundy.push(this.ostatnieZdjecie1);
+        this.przegrani.push('obrazykitsu/' + this.ostatnieZdjecie2 + ".jpg");
+        this.ranking.push({nazwa:this.ostatnieZdjecie2, runda: "Odpadł w rundzie: " + this.runda});
+        console.log(this.ListaObrazow.length);
+        if (this.ListaObrazow.length >= 2)
         {
-            this.Wyniki1();
+
+            let NowyIndeks1;
+            let NowyIndeks2;
+        
+            NowyIndeks1 = Math.floor(Math.random() * this.ListaObrazow.length);
+            this.LosObr1.src = 'obrazykitsu/' + this.ListaObrazow[NowyIndeks1] + ".jpg";
+            this.ostatnieZdjecie1 = this.ListaObrazow.splice(NowyIndeks1, 1)[0];
+
+            NowyIndeks2 = Math.floor(Math.random() * this.ListaObrazow.length);
+            this.LosObr2.src = 'obrazykitsu/' + this.ListaObrazow[NowyIndeks2] + ".jpg";
+            this.ostatnieZdjecie2 = this.ListaObrazow.splice(NowyIndeks2, 1)[0];
+
+
+            console.log("Wylosowano:", this.ostatnieZdjecie1);
+            console.log("Wylosowano:", this.ostatnieZdjecie2);
+            console.log("Pozostało w puli:", this.ListaObrazow.length);
+            console.log("Zwyciezcy tej rundy do tego czasu", this.zwyciezcyTejRundy);
+            console.log("Przegrani do tego czasu", this.przegrani);
+
+
+            return;
+        } else{
+            console.log("Ranking na razie: ", this.ranking);
+            this.sprawdzNastepnaRunde();
             return;
         }
-        let NowyIndeks1;
-        let NowyIndeks2;
         
-        NowyIndeks1 = Math.floor(Math.random() * this.ListaObrazow.length);
-        this.LosObr1.src = 'obrazykitsu/' + this.ListaObrazow[NowyIndeks1] + ".jpg";
-        this.ostatnieZdjecie1 = this.ListaObrazow.splice(NowyIndeks1, 1)[0];
-
-        NowyIndeks2 = Math.floor(Math.random() * this.ListaObrazow.length);
-        this.LosObr2.src = 'obrazykitsu/' + this.ListaObrazow[NowyIndeks2] + ".jpg";
-        this.ostatnieZdjecie2 = this.ListaObrazow.splice(NowyIndeks2, 1)[0];
-
-
-        console.log("Wylosowano:", this.ostatnieZdjecie1);
-        console.log("Wylosowano:", this.ostatnieZdjecie2);
-        console.log("Pozostało w puli:", this.ListaObrazow.length);
     
 
     }
@@ -205,28 +220,54 @@ class DrugiTryb {
         console.log("Wybrano 2");
         this.wybraneObrazyhis.push('obrazykitsu/' + this.ostatnieZdjecie2 + ".jpg");
         this.niewybraneObrazyhis.push('obrazykitsu/' + this.ostatnieZdjecie1 + ".jpg");
-        if (this.ListaObrazow.length === 0)
+        this.zwyciezcyTejRundy.push(this.ostatnieZdjecie2);
+        this.przegrani.push('obrazykitsu/' + this.ostatnieZdjecie1 + ".jpg");
+        this.ranking.push({nazwa:this.ostatnieZdjecie1, runda: "Odpadł w rundzie: " + this.runda});
+        console.log(this.ListaObrazow.length);
+        if (this.ListaObrazow.length >= 2)
         {
-            this.Wyniki1();
+            let NowyIndeks1;
+            let NowyIndeks2;
+        
+            NowyIndeks1 = Math.floor(Math.random() * this.ListaObrazow.length);
+            this.LosObr1.src = 'obrazykitsu/' + this.ListaObrazow[NowyIndeks1] + ".jpg";
+            this.ostatnieZdjecie1 = this.ListaObrazow.splice(NowyIndeks1, 1)[0];
+
+            NowyIndeks2 = Math.floor(Math.random() * this.ListaObrazow.length);
+            this.LosObr2.src = 'obrazykitsu/' + this.ListaObrazow[NowyIndeks2] + ".jpg";
+            this.ostatnieZdjecie2 = this.ListaObrazow.splice(NowyIndeks2, 1)[0];
+
+
+            console.log("Wylosowano:", this.ostatnieZdjecie1);
+            console.log("Wylosowano:", this.ostatnieZdjecie2);
+            console.log("Pozostało w puli:", this.ListaObrazow.length);
+            console.log("Zwyciezcy tej rundy do tego czasu", this.zwyciezcyTejRundy);
+            console.log("Przegrani do tego czasu", this.przegrani);
+
+
+            return;
+        } else{
+            console.log("Ranking na razie: ", this.ranking);
+            this.sprawdzNastepnaRunde();
             return;
         }
-        let NowyIndeks1;
-        let NowyIndeks2;
-        
-        NowyIndeks1 = Math.floor(Math.random() * this.ListaObrazow.length);
-        this.LosObr1.src = 'obrazykitsu/' + this.ListaObrazow[NowyIndeks1] + ".jpg";
-        this.ostatnieZdjecie1 = this.ListaObrazow.splice(NowyIndeks1, 1)[0];
 
-        NowyIndeks2 = Math.floor(Math.random() * this.ListaObrazow.length);
-        this.LosObr2.src = 'obrazykitsu/' + this.ListaObrazow[NowyIndeks2] + ".jpg";
-        this.ostatnieZdjecie2 = this.ListaObrazow.splice(NowyIndeks2, 1)[0];
+    }
 
-
-        console.log("Wylosowano:", this.ostatnieZdjecie1);
-        console.log("Wylosowano:", this.ostatnieZdjecie2);
-        console.log("Pozostało w puli:", this.ListaObrazow.length);
-    
-
+    sprawdzNastepnaRunde() {
+        if (this.zwyciezcyTejRundy.length + this.ListaObrazow.length > 1) {
+            console.log('koniec rundy');
+            alert('Koniec rundy ' + this.runda);
+            this.ListaObrazow = [...this.zwyciezcyTejRundy, ...this.ListaObrazow];
+            this.zwyciezcyTejRundy = [];
+            this.runda++;
+            this.ZacznijGre2();
+            alert('runda ' + this.runda);
+        } else {
+            let finalnyZwyciezca = this.zwyciezcyTejRundy[0];
+            this.ranking.push({ nazwa: finalnyZwyciezca, runda: "Zwycięzca" });
+            this.Wyniki1();
+        }
     }
 
     Wyniki1(){
@@ -235,29 +276,22 @@ class DrugiTryb {
         this.LosObr1.style.display ='none';
         this.LosObr2.style.display ='none';
         this.tekst1.style.display = 'none';
-        this.wybraneObrazy.style.display = 'block';
-        this.niewybraneObrazy.style.display = 'block';
-        console.log('tryb2 etap1 skonczony');
-        for (let i = 0; i < this.wybraneObrazyhis.length; i++) {
+        this.ObrazyRanking.style.display = 'block';
+        const ostatecznyRanking = [...this.ranking].reverse();
+        for (let i = 0; i < ostatecznyRanking.length; i++) {
             const nowyobraz = document.createElement('img');
-            console.log(this.wybraneObrazyhis[i]);
+            console.log(ostatecznyRanking[i]);
             console.log(i);
-            nowyobraz.src = this.wybraneObrazyhis[i];
+            nowyobraz.src = 'obrazykitsu/'+ ostatecznyRanking[i].nazwa + ".jpg";
             nowyobraz.style.width= '100px';
             nowyobraz.style.height = 'auto';
-            this.wybraneObrazy.appendChild(nowyobraz);
-            console.log("wybraneobr dziala");
+            this.ObrazyRanking.appendChild(nowyobraz);
+            console.log("Wyswietlanie ranking dziala");
+            let rankingtekst = document.createElement('p');
+            rankingtekst.innerText = "Zajął miejsce: "+ (i+1) + " | " + ostatecznyRanking[i].runda;
+            this.ObrazyRanking.appendChild(rankingtekst);
         }
-        for (let i = 0; i < this.niewybraneObrazyhis.length; i++) {
-            const nowyobraz = document.createElement('img');
-            console.log(this.niewybraneObrazyhis[i]);
-            console.log(i);
-            nowyobraz.src = this.niewybraneObrazyhis[i];
-            nowyobraz.style.width= '100px';
-            nowyobraz.style.height = 'auto';
-            this.niewybraneObrazy.appendChild(nowyobraz);
-            console.log("niewybraneobr dziala");
-        }
+
     }
 }
 
