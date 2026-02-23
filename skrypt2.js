@@ -1,297 +1,212 @@
-class PierwszyTryb {
-    constructor(obrazykitsu) {
+class FirstGameType {
+    #imagePool;
+    #dislikeHistory = [];
+    #likedHistory = [];
+    #currentImage;
+    #folderPath = 'obrazykitsu/';
+    constructor(TableName) {
     
-    this.ListaObrazow = [...obrazykitsu];
-    this.historiadislike = [];
-    this.historialike = [];
-    this.ostatnieZdjecie;
+    this.#imagePool = [...TableName];
+    
+    this.elements = {
+        btnStart: document.getElementById('start'),
+        btnDislike: document.getElementById('dislike'),
+        btnLike: document.getElementById('like'),
+        containerDislike: document.getElementById('Dislikowane_Obrazy'),
+        containerLike: document.getElementById('Likowane_Obrazy'),
+        RandomImage: document.getElementById('LosowyObraz')
+    };
 
-    this.przyc_start = document.getElementById('start')
-    this.przyc_dislike = document.getElementById('dislike');
-    this.przyc_like = document.getElementById('like');
-    this.dislikowaneObrazy = document.getElementById('Dislikowane_Obrazy');
-    this.likowaneObrazy = document.getElementById('Likowane_Obrazy');
-    
-    
-    this.LosObr = document.getElementById('LosowyObraz');
-    this.przyc_start.style.display = 'block';
-    
-    
-    
     this.init();
     
     }
     init() {
-        this.przyc_start.addEventListener('click', () => this.ZacznijGre());
-        this.przyc_dislike.addEventListener('click', () => this.Dislikuj());
-        this.przyc_like.addEventListener('click', () => this.Likuj());
+        this.elements.btnStart.style.display = 'block';
 
-        this.LosObr.onload = () => {
-            this.przyc_dislike.style.display = 'block';
-            this.przyc_like.style.display = 'block';
-            this.przyc_start.style.display = 'none';
+        this.elements.btnStart.addEventListener('click', () => this.ShowNextImage());
+        this.elements.btnDislike.addEventListener('click', () => this.DisOrLike(dislike));
+        this.elements.btnLike.addEventListener('click', () => this.DisOrLike(like));
+
+        this.elements.RandomImage.onload = () => {
+            this.elements.btnDislike.style.display = 'block';
+            this.elements.btnLike.style.display = 'block';
+            this.elements.btnStart.style.display = 'none';
         };
 
 
     }
-    ZacznijGre() {
 
-        this.RandomowyIndex = Math.floor(Math.random() * this.ListaObrazow.length);
-        this.LosObr.src = 'obrazykitsu/' + this.ListaObrazow[this.RandomowyIndex] + ".jpg";
-        this.ostatnieZdjecie = this.ListaObrazow.splice(this.RandomowyIndex, 1)[0];
-        console.log("Wylosowano:", this.ostatnieZdjecie);
-    }
-    Dislikuj() {
-        console.log("Dislikowano, tabela:" , this.historiadislike);
-        this.historiadislike.push('obrazykitsu/' + this.ostatnieZdjecie + ".jpg");
-        if (this.ListaObrazow.length === 0)
-        {
-            this.Wyniki();
-            return;
-        }
-        let NowyIndeks;
-        
-        NowyIndeks = Math.floor(Math.random() * this.ListaObrazow.length);
-        //this.RandomowyIndex = NowyIndeks;
-        this.LosObr.src = 'obrazykitsu/' + this.ListaObrazow[NowyIndeks] + ".jpg";
-        this.ostatnieZdjecie = this.ListaObrazow.splice(NowyIndeks, 1)[0];
+    DisOrLike(type) {
+        const fullPath = this.#folderPath + this.#currentImage +".jpg";
 
-
-        console.log("Wylosowano:", this.ostatnieZdjecie);
-        console.log("Pozostało w puli:", this.ListaObrazow.length);
-        /*if (this.ListaObrazow.length === 0)
+        if (type === like) {
+            this.#likedHistory.push(fullPath)
+            console.log('Liked');
+        } else if (type === dislike)
         {
-            this.Wyniki();
-            return;
-        }*/
-        
-    }
-    Likuj() {
-        console.log("Likowano, tabela:" , this.historialike);
-        this.historialike.push('obrazykitsu/' + this.ostatnieZdjecie + ".jpg");
-        if (this.ListaObrazow.length === 0)
-        {
-            this.Wyniki();
-            return;
+            this.#dislikeHistory.push(fullPath);
+            console.log('Disliked');
         }
 
-        let NowyIndeks;
+        if (this.#imagePool.length === 0) {
+            this.Results();
+        } else {
+            this.ShowNextImage();
+        }
         
-        NowyIndeks = Math.floor(Math.random() * this.ListaObrazow.length);
-        //this.RandomowyIndex = NowyIndeks;
-        this.LosObr.src = 'obrazykitsu/' + this.ListaObrazow[NowyIndeks] + ".jpg";
-        this.ostatnieZdjecie = this.ListaObrazow.splice(NowyIndeks, 1)[0];
-
-        console.log("Wylosowano:", this.ostatnieZdjecie);
-        
-        console.log("Pozostało w puli:", this.ListaObrazow.length);
-        /*if (this.ListaObrazow.length === 0)
-        {
-            this.Wyniki();
-            return;
-        }*/
     }
-    Wyniki(){
-        this.przyc_like.style.display = 'none';
-        this.przyc_dislike.style.display = 'none';
-        this.LosObr.style.display ='none';
-        this.dislikowaneObrazy.style.display = 'block';
-        this.likowaneObrazy.style.display = 'block';
-        console.log("hej1");
-        for (let i = 0; i < this.historiadislike.length; i++) {
-            const nowyobraz = document.createElement('img');
-            console.log(this.historiadislike[i]);
+
+    ShowNextImage() {
+        const randomindex = Math.floor(Math.random() * this.#imagePool.length);
+
+        this.#currentImage = this.#imagePool.splice(randomindex, 1)[0];
+        
+        this.elements.RandomImage.src = this.#folderPath + this.#currentImage + ".jpg";
+
+
+        console.log("Random Image:", this.#currentImage);
+        console.log("Left:", this.#imagePool.length);
+
+    }
+    
+    
+    
+    Results(){
+        this.elements.btnLike.style.display = 'none';
+        this.elements.btnDislike.style.display = 'none';
+        this.elements.RandomImage.style.display ='none';
+        this.elements.containerDislike.style.display = 'block';
+        this.elements.containerLike.style.display = 'block'
+        for (let i = 0; i < this.#dislikeHistory.length; i++) {
+            const newImage = document.createElement('img');
+            console.log(this.#dislikeHistory[i]);
             console.log(i);
-            nowyobraz.src = this.historiadislike[i];
-            nowyobraz.style.width= '100px';
-            nowyobraz.style.height = 'auto';
-            this.dislikowaneObrazy.appendChild(nowyobraz);
-            console.log("dislike dziala");
+            newImage.src = this.#dislikeHistory[i];
+            newImage.style.width= '100px';
+            newImage.style.height = 'auto';
+            this.elements.containerDislike.appendChild(newImage);
+            console.log("dislike works");
         }
-        for (let i = 0; i < this.historialike.length; i++) {
-            const nowyobraz = document.createElement('img');
-            console.log(this.historialike[i]);
+        for (let i = 0; i < this.#likedHistory.length; i++) {
+            const newImage = document.createElement('img');
+            console.log(this.#likedHistory[i]);
             console.log(i);
-            nowyobraz.src = this.historialike[i];
-            nowyobraz.style.width= '100px';
-            nowyobraz.style.height = 'auto';
-            this.likowaneObrazy.appendChild(nowyobraz);
-            console.log("like dziala");
+            newImage.src = this.#likedHistory[i];
+            newImage.style.width= '100px';
+            newImage.style.height = 'auto';
+            this.elements.containerLike.appendChild(newImage);
+            console.log("like works");
         }
-        console.log("hej2");
     }
+
 
 }
+class SecondGameType {
+    
+    #imagePool;
+    #ranking = [];
+    #WinnersOfCurrentRound = [];
+    #currentMatch = [];
+    #Round = 1;
+    #basePath = 'obrazykitsu/';
 
-
-class DrugiTryb {
-    constructor(obrazykitsu){
-
-        this.ListaObrazow = [...obrazykitsu];
-        this.ostatnieZdjecie;
-        this.ostatnieZdjecie2;
-        this.wybraneObrazyhis = [];
-        this.niewybraneObrazyhis = [];
-        this.ranking = [];
-        this.przegrani = [];
-        this.zwyciezcyTejRundy = [];
-        this.runda = 1;
-
-        this.przyc_start = document.getElementById('start2');
-        this.przyc_wybierz1 = document.getElementById('przycwybierz1');
-        this.przyc_wybierz2 = document.getElementById('przycwybierz2');
-        this.ObrazyRanking = document.getElementById('Ranking');
-
-        this.LosObr1 = document.getElementById('LosowyObraz1');
-        this.LosObr2 = document.getElementById('LosowyObraz2');
-        this.przyc_start.style.display = 'block';
-        this.tekst1 = document.getElementById('tekst2tryb');
+    constructor(TableName)
+    {
+        this.#imagePool = [...TableName];
+        this.elements = {
+            btnStart: document.getElementById('start2'),
+            buttons: [document.getElementById('przycwybierz1'), document.getElementById('przycwybierz2')],
+            images: [document.getElementById('LosowyObraz'), document.getElementById('LosowyObraz2')],
+            containerRanking: document.getElementById('Ranking'),
+            text: document.getElementById('tekst2tryb')
+        }
 
         this.init();
     
     }
     init() {
-        this.przyc_start.addEventListener('click', () => this.ZacznijGre2());
-        this.przyc_wybierz1.addEventListener('click', () => this.Wybierz1());
-        this.przyc_wybierz2.addEventListener('click', () => this.Wybierz2());
+        this.elements.btnStart.style.display = 'block';
+        this.elements.btnStart.addEventListener('click', () => this.ShowNextMatch());
+        this.elements.buttons.forEach((btn, index) => {
+            btn.onclick = () => this.Selection(index);
+        });
 
-        this.LosObr2.onload = () => {
-            this.przyc_start.style.display = 'none';
-            this.tekst1.style.display = 'block';
-            this.przyc_wybierz1.style.display = 'inline-block';
-            this.przyc_wybierz2.style.display = 'inline-block';
+        this.elements.images[1].onload = () => {
+            this.elements.btnStart.style.display = 'none';
+            this.elements.text.style.display = 'block';
+            this.elements.buttons.forEach(btn => btn.style.display = 'inline-block');
         };
 
 
     }
 
-    ZacznijGre2() {
+    Selection(selectedImage) {
+        const winner = this.#currentMatch[selectedImage];
+        const loser = this.#currentMatch[selectedImage === 0 ? 1 : 0];
 
-        this.RandomowyIndex = Math.floor(Math.random() * this.ListaObrazow.length);
-        this.LosObr1.src = 'obrazykitsu/' + this.ListaObrazow[this.RandomowyIndex] + ".jpg";
-        this.ostatnieZdjecie1 = this.ListaObrazow.splice(this.RandomowyIndex, 1)[0];
-        this.RandomowyIndex2 = Math.floor(Math.random() * this.ListaObrazow.length);
-        this.LosObr2.src = 'obrazykitsu/' + this.ListaObrazow[this.RandomowyIndex2] + ".jpg";
-        this.ostatnieZdjecie2 = this.ListaObrazow.splice(this.RandomowyIndex2, 1)[0];
-        console.log("Wylosowano:  ", this.ostatnieZdjecie1, " i: ", this.ostatnieZdjecie2);
-    }
+        this.#WinnersOfCurrentRound.push(winner);
+        this.#ranking.push({ name: loser, info: ('Odpadł w rundzie: ' + this.#Round)})
+        console.log('Works, ', this.#ranking);
 
-    Wybierz1() {
-        console.log("Wybrano 1");
-        this.wybraneObrazyhis.push('obrazykitsu/' + this.ostatnieZdjecie1 + ".jpg");
-        this.niewybraneObrazyhis.push('obrazykitsu/' + this.ostatnieZdjecie2 + ".jpg");
-        this.zwyciezcyTejRundy.push(this.ostatnieZdjecie1);
-        this.przegrani.push('obrazykitsu/' + this.ostatnieZdjecie2 + ".jpg");
-        this.ranking.push({nazwa:this.ostatnieZdjecie2, runda: "Odpadł w rundzie: " + this.runda});
-        console.log(this.ListaObrazow.length);
-        if (this.ListaObrazow.length >= 2)
-        {
-
-            let NowyIndeks1;
-            let NowyIndeks2;
-        
-            NowyIndeks1 = Math.floor(Math.random() * this.ListaObrazow.length);
-            this.LosObr1.src = 'obrazykitsu/' + this.ListaObrazow[NowyIndeks1] + ".jpg";
-            this.ostatnieZdjecie1 = this.ListaObrazow.splice(NowyIndeks1, 1)[0];
-
-            NowyIndeks2 = Math.floor(Math.random() * this.ListaObrazow.length);
-            this.LosObr2.src = 'obrazykitsu/' + this.ListaObrazow[NowyIndeks2] + ".jpg";
-            this.ostatnieZdjecie2 = this.ListaObrazow.splice(NowyIndeks2, 1)[0];
-
-
-            console.log("Wylosowano:", this.ostatnieZdjecie1);
-            console.log("Wylosowano:", this.ostatnieZdjecie2);
-            console.log("Pozostało w puli:", this.ListaObrazow.length);
-            console.log("Zwyciezcy tej rundy do tego czasu", this.zwyciezcyTejRundy);
-            console.log("Przegrani do tego czasu", this.przegrani);
-
-
-            return;
-        } else{
-            console.log("Ranking na razie: ", this.ranking);
-            this.sprawdzNastepnaRunde();
-            return;
-        }
-        
-    
-
-    }
-    Wybierz2() {
-        console.log("Wybrano 2");
-        this.wybraneObrazyhis.push('obrazykitsu/' + this.ostatnieZdjecie2 + ".jpg");
-        this.niewybraneObrazyhis.push('obrazykitsu/' + this.ostatnieZdjecie1 + ".jpg");
-        this.zwyciezcyTejRundy.push(this.ostatnieZdjecie2);
-        this.przegrani.push('obrazykitsu/' + this.ostatnieZdjecie1 + ".jpg");
-        this.ranking.push({nazwa:this.ostatnieZdjecie1, runda: "Odpadł w rundzie: " + this.runda});
-        console.log(this.ListaObrazow.length);
-        if (this.ListaObrazow.length >= 2)
-        {
-            let NowyIndeks1;
-            let NowyIndeks2;
-        
-            NowyIndeks1 = Math.floor(Math.random() * this.ListaObrazow.length);
-            this.LosObr1.src = 'obrazykitsu/' + this.ListaObrazow[NowyIndeks1] + ".jpg";
-            this.ostatnieZdjecie1 = this.ListaObrazow.splice(NowyIndeks1, 1)[0];
-
-            NowyIndeks2 = Math.floor(Math.random() * this.ListaObrazow.length);
-            this.LosObr2.src = 'obrazykitsu/' + this.ListaObrazow[NowyIndeks2] + ".jpg";
-            this.ostatnieZdjecie2 = this.ListaObrazow.splice(NowyIndeks2, 1)[0];
-
-
-            console.log("Wylosowano:", this.ostatnieZdjecie1);
-            console.log("Wylosowano:", this.ostatnieZdjecie2);
-            console.log("Pozostało w puli:", this.ListaObrazow.length);
-            console.log("Zwyciezcy tej rundy do tego czasu", this.zwyciezcyTejRundy);
-            console.log("Przegrani do tego czasu", this.przegrani);
-
-
-            return;
-        } else{
-            console.log("Ranking na razie: ", this.ranking);
-            this.sprawdzNastepnaRunde();
-            return;
-        }
-
-    }
-
-    sprawdzNastepnaRunde() {
-        if (this.zwyciezcyTejRundy.length + this.ListaObrazow.length > 1) {
-            console.log('koniec rundy');
-            alert('Koniec rundy ' + this.runda);
-            this.ListaObrazow = [...this.zwyciezcyTejRundy, ...this.ListaObrazow];
-            this.zwyciezcyTejRundy = [];
-            this.runda++;
-            this.ZacznijGre2();
-            alert('runda ' + this.runda);
+        if (this.#imagePool.length >= 2) {
+            this.ShowNextMatch();
         } else {
-            let finalnyZwyciezca = this.zwyciezcyTejRundy[0];
-            this.ranking.push({ nazwa: finalnyZwyciezca, runda: "Zwycięzca" });
-            this.Wyniki1();
+            this.EndRound();
         }
     }
 
-    Wyniki1(){
-        this.przyc_wybierz1.style.display = 'none';
-        this.przyc_wybierz2.style.display = 'none';
-        this.LosObr1.style.display ='none';
-        this.LosObr2.style.display ='none';
-        this.tekst1.style.display = 'none';
-        this.ObrazyRanking.style.display = 'block';
-        const ostatecznyRanking = [...this.ranking].reverse();
-        for (let i = 0; i < ostatecznyRanking.length; i++) {
-            const nowyobraz = document.createElement('img');
-            console.log(ostatecznyRanking[i]);
-            console.log(i);
-            nowyobraz.src = 'obrazykitsu/'+ ostatecznyRanking[i].nazwa + ".jpg";
-            nowyobraz.style.width= '100px';
-            nowyobraz.style.height = 'auto';
-            this.ObrazyRanking.appendChild(nowyobraz);
-            console.log("Wyswietlanie ranking dziala");
-            let rankingtekst = document.createElement('p');
-            rankingtekst.innerText = "Zajął miejsce: "+ (i+1) + " | " + ostatecznyRanking[i].runda;
-            this.ObrazyRanking.appendChild(rankingtekst);
-        }
+    ShowNextMatch() {
+        console.log("Start");
+        this.#currentMatch = [this.#drawFromPool(), this.#drawFromPool()];
 
+        this.#currentMatch.forEach((imgName, i) =>{
+            this.elements.images[i].src = this.#basePath + imgName + ".jpg";
+            console.log(this.#currentMatch[i]);
+        });
+    }
+
+    #drawFromPool() {
+        console.log("Draws From Pool");
+        const index = Math.floor(Math.random() * this.#imagePool.length);
+        return this.#imagePool.splice(index, 1)[0];
+    }
+
+    EndRound() {
+        const nextPool = [...this.#WinnersOfCurrentRound, ...this.#imagePool];
+
+        if (nextPool.length > 1) {
+            alert("Koniec rundy ", this.#Round);
+            this.#imagePool = nextPool;
+            this.#WinnersOfCurrentRound = [];
+            this.#Round++;
+            this.ShowNextMatch();
+        } else {
+            this.#ranking.push({ name: nextPool[0], info: "Zwycięzca" });
+            console.log('Works, ', this.#ranking);
+            this.ShowResults();
+        }
+    }
+
+    ShowResults() {
+        console.log('Works, ', this.#ranking);
+        Object.values(this.elements).forEach(e1 => {
+            if (e1 instanceof HTMLElement) e1.style.display = 'none';
+            if (Array.isArray(e1)) e1.forEach(e => e.style.display = 'none');
+        });
+
+        this.elements.containerRanking.style.display = 'block';
+
+        [...this.#ranking].reverse().forEach((item, i) => {
+            console.log('Works, ', this.#ranking);
+            const ImagesResults = document.createElement('img');
+            ImagesResults.src = (this.#basePath + item.name + ".jpg");
+            ImagesResults.style.width= '100px';
+            ImagesResults.style.height = 'auto';
+            let rankingText = document.createElement('p');
+            rankingText.innerText = "Zajął miejsce: " + (i + 1) + " | " + item.info;
+            this.elements.containerRanking.appendChild(ImagesResults);
+            this.elements.containerRanking.appendChild(rankingText);
+        })
     }
 }
 
@@ -320,21 +235,16 @@ document.addEventListener('DOMContentLoaded', () =>{
         'kitsu18'
     ];
     
-    przyc_1tryb = document.getElementById('Tryb1');
-    przyc_2tryb = document.getElementById('Tryb2');
-    przyc_3tryb = document.getElementById('Tryb3');
-    tryby = document.getElementById('Tryby');
-    przyc_1tryb.addEventListener('click', () => {
-        tryby.style.display='none';
-        const startgry1 = new PierwszyTryb(obrazykitsu);
+    BtnType1 = document.getElementById('Tryb1');
+    BtnType2 = document.getElementById('Tryb2');
+    Types = document.getElementById('Tryby');
+    BtnType1.addEventListener('click', () => {
+        Types.style.display='none';
+        const Start1 = new FirstGameType(obrazykitsu);
     });
-    przyc_2tryb.addEventListener('click', () => {
-        tryby.style.display='none';
-        const startgry2 = new DrugiTryb(obrazykitsu);
+    BtnType2.addEventListener('click', () => {
+        Types.style.display='none';
+        const Start2 = new SecondGameType(obrazykitsu);
     });
     
 });
-
-
-
-
