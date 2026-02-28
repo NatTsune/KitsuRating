@@ -6,6 +6,7 @@
      margin-right:auto;
 }
 
+
 .przyciskstart{
     display: none;
     text-align: center;
@@ -15,6 +16,24 @@
     width:200px;
     height:auto;
     font-size:50px;
+    border: 10px solid #334902;
+    border-radius: 50px;
+    background-color: #cae0bc;
+    color: #5e8049;
+}
+
+.drugitrybprzyciski {
+    display: flex;
+    justify-content: center; 
+    gap: 15px;   
+        
+}
+
+.drugitryb {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;            
+    width: 100%;
 }
 
 .losowyobraz{
@@ -27,6 +46,7 @@
 
 .dislike{
     display:none;
+    cursor: pointer;
     width:100px;
     height:auto;
     text-align:center;
@@ -34,10 +54,15 @@
     font-size:20px;
     align-items:center;
     margin: 0 auto;
+    border: 5px solid #334902;
+    border-radius: 50px;
+    background-color: #cae0bc;
+    color: #5e8049;
 }
 
 .like{
     display:none;
+    cursor: pointer;
     width:100px;
     height:auto;
     text-align:center;
@@ -45,6 +70,10 @@
     font-size:20px;
     align-items:center;
     margin: 0 auto;
+    border: 5px solid #334902;
+    border-radius: 50px;
+    background-color: #cae0bc;
+    color: #5e8049;
 }
 
 .dislikowaneobrazy{
@@ -61,6 +90,7 @@
 
 .przyciskstart2{
     display: none;
+    cursor: pointer;
     text-align: center;
     cursor: pointer;
     align-items: center;
@@ -68,14 +98,17 @@
     width:200px;
     height:auto;
     font-size:50px;
+    border: 10px solid #334902;
+    border-radius: 50px;
+    background-color: #cae0bc;
+    color: #5e8049;
 }
 
 .losowyobraz1{
     width:500px;
     height:auto;
     display: inline-block;
-    /*margin-left:auto;
-    margin-right:auto;*/
+
 }
 
 .losowyobraz2{
@@ -83,8 +116,7 @@
     height:auto;
     display: inline-block;
     float: right;
-    /*margin-left:500px;
-    margin-right:auto;*/
+
 }
 
 .tekst2tryb{
@@ -94,12 +126,42 @@
 
 .przycwybierz2{
     display: none;
+    cursor: pointer;
+    border: 5px solid #334902;
+    border-radius: 50px;
+    background-color: #cae0bc;
+    color: #5e8049;
+    align-items: center;
+    justify-content: center;
 }
 
 .przycwybierz1{
     display: none;
+    cursor: pointer;
+    border: 5px solid #334902;
+    border-radius: 50px;
+    background-color: #cae0bc;
+    color: #5e8049;
+    align-items: center;
+    justify-content: center;
 }
 
 .Ranking{
     display:none;
+}
+
+.Tryb1{
+    cursor: pointer;
+    border: 5px solid #334902;
+    border-radius: 50px;
+    background-color: #cae0bc;
+    color: #5e8049;
+}
+
+.Tryb2 {
+    cursor: pointer;
+    border: 5px solid #334902;
+    border-radius: 50px;
+    background-color: #cae0bc;
+    color: #5e8049;
 }

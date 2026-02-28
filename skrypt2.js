@@ -116,7 +116,7 @@ class SecondGameType {
         this.elements = {
             btnStart: document.getElementById('start2'),
             buttons: [document.getElementById('przycwybierz1'), document.getElementById('przycwybierz2')],
-            images: [document.getElementById('LosowyObraz'), document.getElementById('LosowyObraz2')],
+            images: [document.getElementById('LosowyObraz1'), document.getElementById('LosowyObraz2')],
             containerRanking: document.getElementById('Ranking'),
             text: document.getElementById('tekst2tryb')
         }
